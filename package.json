@@ -1,0 +1,30 @@
+{
+  "name": "registration_system",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@element-plus/icons-vue": "^2.3.1",
+    "@tsparticles/vue3": "^3.0.1",
+    "axios": "^1.7.7",
+    "dayjs": "^1.11.13",
+    "element-plus": "^2.8.3",
+    "pinia": "^2.2.2",
+    "pinia-plugin-persistedstate": "^4.0.2",
+    "tsparticles": "^3.5.0",
+    "vue": "^3.4.37",
+    "vue-router": "^4.4.5"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.1.2",
+    "sass": "^1.79.1",
+    "sass-embedded": "^1.79.1",
+    "sass-loader": "^16.0.1",
+    "vite": "^5.4.1"
+  }
+}
