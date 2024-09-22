@@ -14,7 +14,7 @@
             :suffix-icon="Search"
           />
           <el-input
-            v-model="searchValue.typename"
+            v-model="searchValue.typeName"
             style="width: 240px; padding-left: 10px"
             placeholder="请输入标题"
             :suffix-icon="Search"
@@ -42,7 +42,7 @@
         <el-table-column type="selection" width="55" />
         <el-table-column prop="id" label="id" width="100" />
         <el-table-column prop="typeId" label="编号" width="120" />
-        <el-table-column prop="typename" label="标题" width="240" />
+        <el-table-column prop="typeName" label="标题" width="240" />
         <el-table-column prop="isShow" label="启用状态" width="120">
           <template v-slot="scope">
             <el-switch
@@ -80,8 +80,8 @@
       </el-table>
       <!-- 分页插件 -->
       <el-pagination
-        v-model:current-page="currentPage"
-        v-model:page-size="pageSize"
+        v-model:current-page="searchValue.pageNum"
+        v-model:page-size="searchValue.pageSize"
         :page-sizes="pageSizes"
         :background="true"
         layout=" prev, pager, next, jumper, sizes, total"
@@ -103,8 +103,8 @@
       <el-form-item label="编号" prop="typeId">
         <el-input v-model="addForm.typeId" />
       </el-form-item>
-      <el-form-item label="标题" prop="typename">
-        <el-input v-model="addForm.typename" />
+      <el-form-item label="标题" prop="typeName">
+        <el-input v-model="addForm.typeName" />
       </el-form-item>
       <el-form-item label="起止时间">
         <el-date-picker
@@ -149,8 +149,8 @@
       <el-form-item label="编号" prop="typeId">
         <el-input v-model="editForm.typeId" />
       </el-form-item>
-      <el-form-item label="标题" prop="typename">
-        <el-input v-model="editForm.typename" />
+      <el-form-item label="标题" prop="typeName">
+        <el-input v-model="editForm.typeName" />
       </el-form-item>
       <el-form-item label="起止时间">
         <el-date-picker
@@ -197,20 +197,21 @@ onMounted(() => {
 
 const getItemTypeList = async () => {
   const res = await axios.get(
-    `/adminapi/apply?pageSize=${pageSize.value}&pageNum=${currentPage.value}`
+    `/adminapi/apply?pageSize=${searchValue.value.pageSize}&pageNum=${searchValue.value.pageNum}&typeId=${searchValue.value.typeId}&typeName=${searchValue.value.typeName}`
   );
   tableData.value = res.data.data.list;
 };
 
 const searchValue = ref({
   typeId: "",
-  typename: "",
+  typeName: "",
+  pageSize: 5,
+  pageNum: 1,
 });
 
 const handleSearch = async () => {
   console.log(searchValue.value);
-  const res = await axios.get("/adminapi/apply", { params: searchValue.value });
-  tableData.value = res.data.data;
+  getItemTypeList();
 };
 
 // 新增相关内容
@@ -218,7 +219,7 @@ const addFormRef = ref(null);
 const addDialogVisible = ref(false);
 const addForm = ref({
   typeId: null,
-  typename: "",
+  typeName: "",
   beginTime: "",
   endTime: "",
   description: "",
@@ -229,7 +230,7 @@ const handleAdd = () => {
 };
 const rules = {
   typeId: [{ required: true, message: "请输入编号", trigger: "blur" }],
-  typename: [{ required: true, message: "请输入标题", trigger: "blur" }],
+  typeName: [{ required: true, message: "请输入标题", trigger: "blur" }],
   beginTime: [{ required: true, message: "请选择开始时间", trigger: "blur" }],
   endTime: [{ required: true, message: "请选择结束时间", trigger: "blur" }],
   description: [{ required: true, message: "请输入描述", trigger: "blur" }],
@@ -240,7 +241,7 @@ const cancelAddForm = () => {
   // 清楚表单内容
   addForm.value = {
     typeId: "",
-    typename: "",
+    typeName: "",
     beginTime: "",
     endTime: "",
     description: "",
@@ -265,7 +266,7 @@ const editDialogVisible = ref(false);
 const editForm = ref({
   id: "",
   typeId: "",
-  typename: "",
+  typeName: "",
   beginTime: "",
   endTime: "",
   description: "",
@@ -343,20 +344,19 @@ const handleAllDelete = () => {
 };
 
 // 分页相关内容
-const currentPage = ref(1);
-const pageSize = ref(5);
+
 const pageSizes = ref([5, 10, 15, 20]);
 
 const handleCurrentChange = (val) => {
   console.log(`当前页: ${val}`);
-  currentPage.value = val;
+  searchValue.value.pageNum = val;
   // 重新获取数据
   getItemTypeList();
 };
 
 const handleSizeChange = async (val) => {
   console.log(`每页 ${val} 条`);
-  pageSize.value = val;
+  searchValue.value.pageSize = val;
   // 重新获取数据
   getItemTypeList();
 };
