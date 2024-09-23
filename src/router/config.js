@@ -22,7 +22,7 @@ const routes = [
   {
     path: "/registration/blackList",
     name: "数据信息/黑名单",
-    component: () => import("@/views/registration/backList.vue"),
+    component: () => import("@/views/registration/blackList.vue"),
   },
   {
     path: "/rights/roleList",
