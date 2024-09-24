@@ -92,7 +92,7 @@
   </div>
 
   <!-- 新增对话框 -->
-  <el-dialog v-model="addDialogVisible" title="新增报名人员" width="45%">
+  <el-dialog v-model="addDialogVisible" title="新增报名用户" width="45%">
     <el-form
       ref="addFormRef"
       :model="addForm"
@@ -150,7 +150,7 @@
   </el-dialog>
 
   <!-- 修改对话框 -->
-  <el-dialog v-model="EditDialogVisible" title="新增报名人员" width="45%">
+  <el-dialog v-model="EditDialogVisible" title="新增报名用户" width="45%">
     <el-form
       ref="EditFormRef"
       :model="EditForm"

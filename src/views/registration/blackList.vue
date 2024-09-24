@@ -266,7 +266,6 @@ const handleEdit = (row) => {
   EditDialogVisible.value = true;
   EditForm.value = { ...row };
   currentItem.value = row;
-  getAllTypeList();
 };
 
 const currentItem = ref(null);
