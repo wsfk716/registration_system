@@ -9,12 +9,12 @@
       </el-breadcrumb>
     </div>
     <div class="right">
-      <div class="desc">欢迎您，{{ user.value.username }}!</div>
+      <div class="desc">欢迎您，{{ user.value.userName }}!</div>
       <el-dropdown>
         <el-avatar :size="50" :src="avaUrl"></el-avatar>
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item>{{ user.value.username }}</el-dropdown-item>
+            <el-dropdown-item>{{ user.value.userName }}</el-dropdown-item>
             <el-dropdown-item @click="logOut">退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </template>

@@ -19,8 +19,8 @@
           label-width="auto"
           class="demo-ruleForm"
         >
-          <el-form-item label="用户名" prop="username" style="font-size: 24px">
-            <el-input v-model="loginForm.username" />
+          <el-form-item label="用户名" prop="userName" style="font-size: 24px">
+            <el-input v-model="loginForm.userName" />
           </el-form-item>
           <el-form-item label="密码" prop="password">
             <el-input v-model="loginForm.password" type="password" />
@@ -52,7 +52,7 @@ import path from "@/router";
 import tsOption from "@/utils/tspartice.js";
 const { user, changeUser } = useUserStore();
 const loginForm = ref({
-  username: "",
+  userName: "",
   password: "",
 });
 const loginFormRef = ref(null);
@@ -78,7 +78,7 @@ const submitLoginForm = () => {
   });
 };
 const rules = {
-  username: [{ required: true, message: "请输入用户名", trigger: "blur" }],
+  userName: [{ required: true, message: "请输入用户名", trigger: "blur" }],
   password: [{ required: true, message: "请输入密码", trigger: "blur" }],
 };
 // 粒子效果
