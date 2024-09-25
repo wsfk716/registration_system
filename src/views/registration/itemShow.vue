@@ -84,7 +84,7 @@
         :page-sizes="pageSizes"
         :background="true"
         layout=" prev, pager, next, jumper, sizes, total"
-        :total="countNumber"
+        :total="total"
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
       />
@@ -215,7 +215,6 @@ import fileDownload from "js-file-download";
 import { Search } from "@element-plus/icons-vue";
 onMounted(() => {
   getItemShowList();
-  getCountNumber();
 });
 // 搜索
 const searchValue = ref({
@@ -230,7 +229,6 @@ const handleSearch = () => {
 };
 // 分页
 const pageSizes = ref([5, 10, 15, 20]);
-const countNumber = ref(0);
 const handleSizeChange = (val) => {
   searchValue.value.pageSize = val;
   getItemShowList();
@@ -239,16 +237,8 @@ const handleCurrentChange = (val) => {
   searchValue.value.pageNum = val;
   getItemShowList();
 };
-// 计算总数
-const getCountNumber = async () => {
-  try {
-    const res = await axios.get("/adminapi/information/count");
-    countNumber.value = res.data.data;
-  } catch (error) {
-    ElMessage.error("获取总数失败");
-  }
-};
 
+const total = ref(0);
 // 表格内容
 const tableData = ref([]);
 const getItemShowList = async () => {
@@ -257,6 +247,7 @@ const getItemShowList = async () => {
       `/adminapi/information?pageNum=${searchValue.value.pageNum}&pageSize=${searchValue.value.pageSize}&name=${searchValue.value.name}&typeName=${searchValue.value.typeName}`
     );
     tableData.value = res.data.data.list;
+    total.value = res.data.data.total;
   } catch (error) {
     ElMessage.error("获取数据失败");
   }
@@ -324,7 +315,6 @@ const submitAddForm = async () => {
       ElMessage.success("新增成功");
       addDialogVisible.value = false;
       getItemShowList();
-      getCountNumber();
     } catch (error) {
       ElMessage.error("新增失败");
     }
@@ -378,7 +368,6 @@ const handleDelete = async (row) => {
     });
     ElMessage.success("删除成功");
     getItemShowList();
-    getCountNumber();
   } catch (error) {
     ElMessage.error("删除失败");
   }
@@ -397,7 +386,7 @@ const handleAllDelete = () => {
     axios.delete("/adminapi/information", { data: ids }).then((res) => {
       // console.log(res);
       getItemShowList();
-      getCountNumber();
+
       ElMessage.success("删除成功");
     });
   }

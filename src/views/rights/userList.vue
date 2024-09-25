@@ -72,7 +72,7 @@
         :page-sizes="pageSizes"
         :background="true"
         layout=" prev, pager, next, jumper, sizes, total"
-        :total="countNumber"
+        :total="total"
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
       />
@@ -162,7 +162,7 @@ import { Edit, Search } from "@element-plus/icons-vue";
 import fileDownload from "js-file-download";
 onMounted(() => {
   getUserList();
-  getCountNumber();
+
   getRoleList();
 });
 // 获取角色列表
@@ -189,7 +189,7 @@ const handleSearch = () => {
 };
 // 分页
 const pageSizes = ref([5, 10, 15, 20]);
-const countNumber = ref(0);
+const total = ref(0);
 const handleSizeChange = (val) => {
   searchValue.value.pageSize = val;
   getUserList();
@@ -197,15 +197,6 @@ const handleSizeChange = (val) => {
 const handleCurrentChange = (val) => {
   searchValue.value.pageNum = val;
   getUserList();
-};
-// 计算总数
-const getCountNumber = async () => {
-  try {
-    const res = await axios.get("/adminapi/user/count");
-    countNumber.value = res.data.data;
-  } catch (error) {
-    ElMessage.error("获取总数失败");
-  }
 };
 
 // 表格内容
@@ -216,6 +207,7 @@ const getUserList = async () => {
       `/adminapi/user?pageNum=${searchValue.value.pageNum}&pageSize=${searchValue.value.pageSize}&userName=${searchValue.value.userName}&roleName=${searchValue.value.roleName}`
     );
     tableData.value = res.data.data.list;
+    total.value = res.data.data.total;
   } catch (error) {
     ElMessage.error("获取数据失败");
   }
@@ -254,7 +246,6 @@ const submitAddForm = async () => {
       ElMessage.success("新增成功");
       addDialogVisible.value = false;
       getUserList();
-      getCountNumber();
     } catch (error) {
       ElMessage.error("新增失败");
     }
@@ -298,7 +289,6 @@ const handleDelete = async (row) => {
     });
     ElMessage.success("删除成功");
     getUserList();
-    getCountNumber();
   } catch (error) {
     ElMessage.error("删除失败");
   }
@@ -317,7 +307,7 @@ const handleAllDelete = () => {
     axios.delete("/adminapi/user", { data: ids }).then((res) => {
       // console.log(res);
       getUserList();
-      getCountNumber();
+
       ElMessage.success("删除成功");
     });
   }

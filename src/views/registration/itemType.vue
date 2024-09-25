@@ -85,7 +85,7 @@
         :page-sizes="pageSizes"
         :background="true"
         layout=" prev, pager, next, jumper, sizes, total"
-        :total="countNumber"
+        :total="total"
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
       />
@@ -192,14 +192,15 @@ import dayjs from "dayjs";
 const tableData = ref([]);
 onMounted(() => {
   getItemTypeList();
-  getCountNumber();
 });
-
+const total = ref(0);
 const getItemTypeList = async () => {
   const res = await axios.get(
     `/adminapi/apply?pageSize=${searchValue.value.pageSize}&pageNum=${searchValue.value.pageNum}&typeId=${searchValue.value.typeId}&typeName=${searchValue.value.typeName}`
   );
   tableData.value = res.data.data.list;
+  // 获取总数
+  total.value = res.data.data.total;
 };
 
 const searchValue = ref({
@@ -359,15 +360,6 @@ const handleSizeChange = async (val) => {
   searchValue.value.pageSize = val;
   // 重新获取数据
   getItemTypeList();
-};
-
-// 获取总数
-const countNumber = ref(0);
-const getCountNumber = () => {
-  axios.get("/adminapi/apply/count").then((res) => {
-    // console.log(res);
-    countNumber.value = res.data.data;
-  });
 };
 </script>
 <style lang="scss" scoped>
