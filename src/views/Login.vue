@@ -64,7 +64,7 @@ const submitLoginForm = () => {
       if (res.data.code === 1) {
         ElMessage.success("登录成功");
         // 保存用户信息
-        user.value = res.data.data;
+        changeUser(res.data.data);
         // 重定向到mainbox
         path.push("/home");
       } else {

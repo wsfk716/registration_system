@@ -9,12 +9,12 @@
       </el-breadcrumb>
     </div>
     <div class="right">
-      <div class="desc">欢迎您，{{ user.value.userName }}!</div>
+      <div class="desc">欢迎您，{{ user.userName }}!</div>
       <el-dropdown>
         <el-avatar :size="50" :src="avaUrl"></el-avatar>
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item>{{ user.value.userName }}</el-dropdown-item>
+            <el-dropdown-item>{{ user.userName }}</el-dropdown-item>
             <el-dropdown-item @click="logOut">退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </template>
@@ -27,7 +27,7 @@
 import { onMounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import { useUserStore } from "../store/userStore";
-const { user } = useUserStore();
+const { user, changeUser } = useUserStore();
 const route = useRoute();
 const breadList = ref([]);
 const avaUrl = "/avatar.png";
@@ -50,7 +50,7 @@ const logOut = () => {
   localStorage.removeItem("user");
   localStorage.removeItem("token");
   // 清空pinia中的user
-  user.value = {};
+  changeUser({});
   location.href = "/login";
 };
 </script>

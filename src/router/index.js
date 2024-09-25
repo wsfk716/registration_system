@@ -39,9 +39,9 @@ router.beforeEach((to, from, next) => {
     // 如果是登录页面，直接跳转
     next();
   } else {
-    if (user.value.token) {
+    if (user.token) {
       // 如果有token，直接跳转
-      const rights = JSON.parse(user.value.role.rights);
+      const rights = JSON.parse(user.role.rights);
       if (rights.includes(to.path)) {
         next();
       } else {
@@ -62,7 +62,7 @@ router.beforeEach((to, from, next) => {
 //     // 如果是从登录页面跳转过来的，需要移除路由
 //     const { user } = useUserStore();
 //     console.log(router.getRoutes());
-//     const rights = JSON.parse(user.value.role.rights);
+//     const rights = JSON.parse(user.role.rights);
 //     const allRoutes = router
 //       .getRoutes()
 //       .filter(

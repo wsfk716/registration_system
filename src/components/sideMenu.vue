@@ -89,8 +89,8 @@ const mapIcons = {
 // 验证权限
 const checkPermission = (path) => {
   // 如果包含在权限列表中，就返回true
-  // console.log(user.value.role.rights);
-  const rights = JSON.parse(user.value.role.rights);
+  // console.log(user.role.rights);
+  const rights = JSON.parse(user.role.rights);
   return rights.includes(path);
 };
 </script>
