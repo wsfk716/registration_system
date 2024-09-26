@@ -1,5 +1,5 @@
 <template>
-  <div id="charts-grades" style="width: 50%; height: 400px"></div>
+  <div id="charts-allCounts" style="width: 50%; height: 100%"></div>
 </template>
 <script setup>
 import * as echarts from "echarts";
@@ -13,33 +13,41 @@ onMounted(() => {
   getDataList();
   // 初始化图表
   // 图表
-  var chartDom = document.getElementById("charts-grades");
+  var chartDom = document.getElementById("charts-allCounts");
   // 初始化 ECharts 实例
   myChart = echarts.init(chartDom);
 
   // 定义图表选项
   const option = {
     title: {
-      text: "年级分布情况",
+      text: "报名情况一览表",
+      left: "center", // 标题居中
     },
     tooltip: {},
     toolbox: {
       feature: {
         saveAsImage: {},
         dataView: {},
-        magicType: {
-          type: ["bar", "line"],
-        },
       },
     },
-    xAxis: {
-      data: xData.value, // x轴数据
+    grid: {
+      left: "15%", // 调整左边距，增加y轴标签显示空间
+      right: "10%", // 调整右边距
+      top: "10%", // 调整上边距
+      bottom: "10%", // 调整下边距
     },
-    yAxis: {
+    xAxis: {
       type: "value",
       minInterval: 1,
       axisLabel: {
         formatter: "{value} 人",
+      },
+    },
+    yAxis: {
+      type: "category",
+      data: yData.value,
+      axisLabel: {
+        interval: 0, // 强制显示所有标签
       },
     },
     series: [
@@ -47,6 +55,10 @@ onMounted(() => {
         name: "人数",
         type: "bar",
         data: seriesData.value, // 数据
+        label: {
+          show: true,
+          position: "right", // 标签显示在条形图右侧
+        },
       },
     ],
   };
@@ -57,8 +69,8 @@ onMounted(() => {
 
 const updateChart = () => {
   myChart.setOption({
-    xAxis: {
-      data: xData.value,
+    yAxis: {
+      data: yData.value,
     },
     series: [
       {
@@ -68,43 +80,29 @@ const updateChart = () => {
   });
 };
 
-const props = defineProps({
-  applyId: {
-    type: Number,
-    required: true,
-  },
-});
-
-// 监听 applyId 的变化
-watch(
-  () => props.applyId,
-  (newVal, oldVal) => {
-    if (newVal !== oldVal) {
-      getDataList();
-    }
-  }
-);
 // 根据id查询对应报名表相关的报名信息
-const xData = ref([]);
+const yData = ref([]);
 const seriesData = ref([]);
 const getDataList = async () => {
-  const res = await axios.get(`/adminapi/information/${props.applyId}`);
-  xData.value = [...new Set(res.data.data.map((item) => item.grades))];
+  const res = await axios.get(`/adminapi/information/all`);
 
-  // 根据 grades 统计人数
+  console.log(res.data.data);
+  yData.value = [...new Set(res.data.data.map((item) => item.typeName))];
+
+  // 根据 typeName 统计人数
   const gradeCounts = res.data.data.reduce((acc, item) => {
-    if (acc[item.grades]) {
-      acc[item.grades] += 1;
+    if (acc[item.typeName]) {
+      acc[item.typeName] += 1;
     } else {
-      acc[item.grades] = 1;
+      acc[item.typeName] = 1;
     }
     return acc;
   }, {});
 
   // 将统计结果转换为数组
-  seriesData.value = xData.value.map((grade) => gradeCounts[grade] || 0);
+  seriesData.value = yData.value.map((typeName) => gradeCounts[typeName] || 0);
 
-  // console.log(xData.value, seriesData.value);
+  console.log(yData.value, seriesData.value);
   updateChart();
 };
 </script>
