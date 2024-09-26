@@ -251,7 +251,7 @@ const handleEdit = async (row) => {
   // 处理初始化的权限下拉列表
   try {
     EditForm.value.rights = JSON.parse(row.rights);
-    console.log(EditForm.value.rights);
+    // console.log(EditForm.value.rights);
     await nextTick(); // 确保 DOM 更新完成
     treeRef.value.setCheckedKeys(EditForm.value.rights);
   } catch (error) {
@@ -296,7 +296,7 @@ const handleDelete = async (row) => {
 const tableRef = ref(null);
 const handleAllDelete = () => {
   const res = tableRef.value.getSelectionRows(); // 这个element-plus的方法获取选中的数据
-  console.log(res);
+  // console.log(res);
   if (res.length === 0) {
     ElMessage.warning("请选择要删除的数据");
   } else {

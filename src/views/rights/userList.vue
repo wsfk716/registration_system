@@ -184,7 +184,7 @@ const searchValue = ref({
   pageNum: 1,
 });
 const handleSearch = () => {
-  console.log(searchValue.value);
+  // console.log(searchValue.value);
   getUserList();
 };
 // 分页
@@ -298,7 +298,7 @@ const handleDelete = async (row) => {
 const tableRef = ref(null);
 const handleAllDelete = () => {
   const res = tableRef.value.getSelectionRows();
-  console.log(res);
+  // console.log(res);
   if (res.length === 0) {
     ElMessage.warning("请选择要删除的数据");
   } else {
@@ -322,7 +322,7 @@ const handleExport = async () => {
         responseType: "blob",
       }
     );
-    console.log(res);
+    // console.log(res);
     fileDownload(
       res.data,
       "注册用户列表" + new Date().toLocaleString() + ".xlsx"

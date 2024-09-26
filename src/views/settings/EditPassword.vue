@@ -51,7 +51,7 @@ const ruleForm = ref({
 });
 
 onMounted(() => {
-  console.log(user);
+  // console.log(user);
 });
 
 const validatePassword = async (rule, value, callback) => {
@@ -94,7 +94,7 @@ const submitForm = async () => {
         password: ruleForm.value.newPassword,
       })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         ElMessage.success("修改成功");
         router.push("/login");
         ruleFormRef.value.resetFields();

@@ -165,7 +165,7 @@ const searchValue = ref({
   pageNum: 1,
 });
 const handleSearch = () => {
-  console.log(searchValue.value);
+  // console.log(searchValue.value);
   getBlackList();
 };
 // 分页
@@ -293,7 +293,7 @@ const handleDelete = async (row) => {
 const tableRef = ref(null);
 const handleAllDelete = () => {
   const res = tableRef.value.getSelectionRows();
-  console.log(res);
+  // console.log(res);
   if (res.length === 0) {
     ElMessage.warning("请选择要删除的数据");
   } else {
@@ -316,7 +316,7 @@ const handleExport = async () => {
         responseType: "blob",
       }
     );
-    console.log(res);
+    // console.log(res);
     fileDownload(res.data, "黑名单" + new Date().toLocaleString() + ".xlsx");
     ElMessage.success("导出成功");
   } catch (error) {

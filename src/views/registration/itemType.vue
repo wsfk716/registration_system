@@ -211,7 +211,7 @@ const searchValue = ref({
 });
 
 const handleSearch = async () => {
-  console.log(searchValue.value);
+  // console.log(searchValue.value);
   getItemTypeList();
 };
 
@@ -251,7 +251,7 @@ const cancelAddForm = () => {
 // 提交添加表单
 const submitAddForm = () => {
   if (addFormRef.value.validate()) {
-    console.log(addForm.value);
+    // console.log(addForm.value);
 
     addDialogVisible.value = false;
     axios.post("/adminapi/apply", addForm.value).then((res) => {
@@ -280,7 +280,7 @@ const handleEdit = (row) => {
 // 提交编辑表单
 const submitEditForm = () => {
   if (editFormRef.value.validate()) {
-    console.log(editForm.value);
+    // console.log(editForm.value);
     editForm.value.beginTime = dayjs(editForm.value.beginTime).format(
       "YYYY-MM-DD HH:mm:ss"
     );
@@ -298,7 +298,7 @@ const submitEditForm = () => {
 
 // 启用状态的切换, 也属于编辑的一种, 1为启用, 0为禁用
 const changeShow = (row) => {
-  console.log(row);
+  // console.log(row);
   axios.put("/adminapi/apply", row).then((res) => {
     // console.log(res);
     getItemTypeList();
@@ -318,7 +318,7 @@ const closeAll = () => {
 // 删除相关内容，单个删除与批量删除
 // 单个删除
 const handleDelete = (row) => {
-  console.log(row);
+  // console.log(row);
   // 删除操作
   axios.delete("/adminapi/apply", { data: [row.id] }).then((res) => {
     // console.log(res);
@@ -330,7 +330,7 @@ const handleDelete = (row) => {
 const tableRef = ref(null);
 const handleAllDelete = () => {
   const res = tableRef.value.getSelectionRows();
-  console.log(res);
+  // console.log(res);
   if (res.length === 0) {
     ElMessage.warning("请选择要删除的数据");
   } else {
@@ -349,14 +349,14 @@ const handleAllDelete = () => {
 const pageSizes = ref([5, 10, 15, 20]);
 
 const handleCurrentChange = (val) => {
-  console.log(`当前页: ${val}`);
+  // console.log(`当前页: ${val}`);
   searchValue.value.pageNum = val;
   // 重新获取数据
   getItemTypeList();
 };
 
 const handleSizeChange = async (val) => {
-  console.log(`每页 ${val} 条`);
+  // console.log(`每页 ${val} 条`);
   searchValue.value.pageSize = val;
   // 重新获取数据
   getItemTypeList();
