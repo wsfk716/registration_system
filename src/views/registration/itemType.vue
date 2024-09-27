@@ -2,7 +2,7 @@
   <div class="itemType">
     <div class="header">
       <div class="left">
-        <el-button type="primary" @click="handleAdd">
+        <el-button type="primary" @click="handleAdd" v-if="user.roleID === 1">
           新增
           <el-icon><CirclePlus /></el-icon>
         </el-button>
@@ -26,11 +26,14 @@
         </div>
       </div>
       <div class="right">
-        <el-button type="danger" @click="handleAllDelete"
+        <el-button
+          type="danger"
+          @click="handleAllDelete"
+          v-if="user.roleID === 1"
           >批量删除
           <el-icon><Delete /></el-icon>
         </el-button>
-        <el-button type="warning" @click="closeAll"
+        <el-button type="warning" @click="closeAll" v-if="user.roleID === 1"
           >关闭所有
           <el-icon><Finished /></el-icon>
         </el-button>
@@ -61,7 +64,7 @@
         <el-table-column prop="beginTime" label="开始时间" width="240" />
         <el-table-column prop="endTime" label="结束时间" width="240" />
         <el-table-column prop="description" label="描述" width="240" />
-        <el-table-column label="操作" min-width="120">
+        <el-table-column label="操作" min-width="120" v-if="user.roleID === 1">
           <template v-slot="scope">
             <el-button type="primary" @click="handleEdit(scope.row)">
               编辑
@@ -189,6 +192,8 @@ import { Search } from "@element-plus/icons-vue";
 import axios from "axios";
 import { ElMessage } from "element-plus";
 import dayjs from "dayjs";
+import { useUserStore } from "@/store/userStore";
+const { user } = useUserStore();
 const tableData = ref([]);
 onMounted(() => {
   getItemTypeList();

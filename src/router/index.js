@@ -35,7 +35,7 @@ routeConfig.forEach((item) => {
 // });
 router.beforeEach((to, from, next) => {
   const { user } = useUserStore();
-  if (to.path === "/login") {
+  if (to.path.includes("/login")) {
     // 如果是登录页面，直接跳转
     next();
   } else {

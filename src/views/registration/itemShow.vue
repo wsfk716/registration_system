@@ -2,7 +2,7 @@
   <div class="itemType">
     <div class="header">
       <div class="left">
-        <el-button type="primary" @click="handleAdd">
+        <el-button type="primary" @click="handleAdd" v-if="user.roleID === 1">
           新增
           <el-icon><CirclePlus /></el-icon>
         </el-button>
@@ -23,14 +23,21 @@
             <el-icon style="padding-right: 5px"> <Search /></el-icon>
             搜索</el-button
           >
-          <el-button type="success" @click="handleExport">
+          <el-button
+            type="success"
+            @click="handleExport"
+            v-if="user.roleID === 1"
+          >
             导出
             <el-icon><Download /></el-icon>
           </el-button>
         </div>
       </div>
       <div class="right">
-        <el-button type="danger" @click="handleAllDelete"
+        <el-button
+          type="danger"
+          @click="handleAllDelete"
+          v-if="user.roleID === 1"
           >批量删除
           <el-icon><Delete /></el-icon>
         </el-button>
@@ -60,7 +67,7 @@
         <el-table-column prop="professional" label="专业" width="120" />
         <el-table-column prop="phone" label="手机号码" width="120" />
         <el-table-column prop="email" label="邮箱" width="200" />
-        <el-table-column label="操作" min-width="120">
+        <el-table-column label="操作" min-width="120" v-if="user.roleID === 1">
           <template v-slot="scope">
             <el-button type="primary" @click="handleEdit(scope.row)">
               编辑
@@ -213,6 +220,8 @@ import { ElMessage } from "element-plus";
 import axios from "axios";
 import fileDownload from "js-file-download";
 import { Search } from "@element-plus/icons-vue";
+import { useUserStore } from "@/store/userStore";
+const { user } = useUserStore();
 onMounted(() => {
   getItemShowList();
 });
