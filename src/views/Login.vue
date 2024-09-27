@@ -8,7 +8,7 @@
   <div class="box">
     <div class="login">
       <div class="left"></div>
-      <!-- -------------默认是登录表单---------------- -->
+      <!------------默认是登录表单------------------>
       <div class="right" v-if="flag">
         <div class="title">在线报名系统</div>
         <el-form
@@ -52,7 +52,7 @@
           <div>© 2024-2025 版权所有 联系方式：1830994325@qq.com</div>
         </div>
       </div>
-      <!-- ----------- 注册的内容 ---------------------->
+      <!------------- 注册的内容 ---------------------->
       <div class="right" v-else>
         <div class="title-re">在线报名系统</div>
         <el-form
