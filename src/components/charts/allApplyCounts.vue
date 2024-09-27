@@ -1,5 +1,5 @@
 <template>
-  <div id="charts-allCounts" style="width: 50%; height: 100%"></div>
+  <div id="charts-allCounts" style="width: 100%; height: 100%"></div>
 </template>
 <script setup>
 import * as echarts from "echarts";
@@ -31,7 +31,7 @@ onMounted(() => {
       },
     },
     grid: {
-      left: "15%", // 调整左边距，增加y轴标签显示空间
+      left: "20%", // 调整左边距，增加y轴标签显示空间
       right: "10%", // 调整右边距
       top: "10%", // 调整上边距
       bottom: "10%", // 调整下边距
