@@ -2,7 +2,7 @@
   <div class="itemType">
     <div class="header">
       <div class="left">
-        <el-button type="primary" @click="handleAdd" v-if="user.roleID === 1">
+        <el-button type="primary" @click="handleAdd">
           新增
           <el-icon><CirclePlus /></el-icon>
         </el-button>
